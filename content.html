@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> 
+        <meta charset="utf-8">
+        <title>
+            jQuery.parseHTML
+        </title>
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    </head>
+    <body>
+        <div id ="log">
+            <h3> Description:</h3>
+        </div>
+        <script>
+            var $log = $( "#log" ),
+str = "HELLO, <b>MY NAME is</b> Tourism management system.", html = $.parseHTML( str ), nodeNames = [];
+
+$log.append( html );
+
+$.each( html, function( i, el ) {
+nodeNames[ i ] = "<li>" + el.nodeName + "</li>";
+});
+
+$log.append( "<h3>Node Names:</h3>" );
+$( "<ol>  content: The page describes the tourism management. where the user can acces the web page and know and gather the information of various places,and also the book the slot to visit the places   </ol>" )
+.append( nodeNames.join( "" ) )
+.appendTo( $log );
+
+        </script>
+    </body>
+</html>

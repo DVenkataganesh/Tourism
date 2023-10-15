@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            background-image: url("https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?cs=srgb&dl=pexels-pixabay-531880.jpg&fm=jpg");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0); /* Semi-transparent black */
+            color: #000000; /* Semi-transparent white */
+            padding: 25px;
+            text-align: center;
+        }
+        button {
+            border: none;
+            background: none;
+            padding: 0;
+            cursor: pointer;
+        }
+        .action-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 25px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+        .action-button a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        input {
+            padding: 1rem;
+            border-radius: 15px;
+            border: none;
+            background-color: #fff;
+            font-family: inherit;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0);
+            min-width: 200px;
+            font-size: 1rem;
+            text-align: center;
+            width: 100%;
+        }
+        input:focus {
+            outline: none;
+        }
+        .search-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .weather {
+            text-align: center;
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+        .weather h2 {
+            margin-bottom: 0;
+            color: rgb(0, 0, 0);
+            display: flex;
+            align-items: center;
+        }
+        small {
+            color: #000000;
+        }
+        img {
+            color: #000000;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1><i class="fas fa-cloud-sun"></i> Tourism Management System</h1>
+        <button class="action-button">
+            <i class="fas fa-sign-in-alt"></i>
+            <a href="dash.html">Homepage</a>
+        </button>
+    </header>
+    <form class="search-form" id="form">
+        <input type="text" id="search" placeholder="Search By Location" autocomplete="off">
+    </form>
+    <main id="main"></main>
+    <script>
+        const apiKey = "AIzaSyB-22BtvpxFn3Pn4sTGWO9nPAX7hkpM29I";
+
+        const main = document.getElementById('main');
+        const form = document.getElementById('form');
+        const search = document.getElementById('search');
+
+        const url = (city) => `https://maps.googleapis.com/maps/api/distancematrix/json?origins=Seattle&destinations=San+Francisco&key=AIzaSyB-22BtvpxFn3Pn4sTGWO9nPAX7hkpM29I`;
+
+        async function getWeatherByLocation(city) {
+            const resp = await fetch(url(city), {
+                origin: "cros"
+            });
+            const respData = await resp.json();
+
+            addWeatherToPage(respData);
+        }
+
+        function addWeatherToPage(data) {
+            const tempCelsius = Ktoc(data.main.temp);
+            const tempFahrenheit = CtoF(tempCelsius);
+
+            const weather = document.createElement('div');
+            weather.classList.add('weather');
+
+            weather.innerHTML = `
+            <h2>
+                <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" />
+                ${tempFahrenheit}°F
+                <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" />
+            </h2>
+            <small>${data.weather[0].main}</small>
+            `;
+
+            main.innerHTML = "";
+            main.appendChild(weather);
+        }
+
+        function Ktoc(K) {
+            return Math.floor(K - 273.15);
+        }
+
+        function CtoF(celsius) {
+            return (celsius * 9/5) + 32;
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const city = search.value;
+
+            if (city) {
+                getWeatherByLocation(city);
+            }
+        });
+    </script>
+</body>
+
+</html>
