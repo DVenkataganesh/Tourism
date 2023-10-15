@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Rotation</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+  }
+  
+  .rotate-button {
+    margin-top: 20px;
+    padding: 30px;
+    font-weight: 200;
+  }
+  body{
+    background-color: rgb(74, 57, 57);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+</style>
+</head>
+<body>
+
+<div class="image-container">
+  <img id="rotatingImage" src="mikolaj-DCzpr09cTXY-unsplash.jpg" alt="Rotating Image" width="200" height="200">
+</div>
+
+<button class="rotate-button">Rotate 90°</button>
+
+<script>
+$(document).ready(function() {
+  var angle = 0;
+
+  $(".rotate-button").click(function() {
+    angle += 90;
+    $("#rotatingImage").css({
+      transform: 'rotate(' + angle + 'deg)',
+      transition: 'transform 0.3s ease-in-out'
+    });
+  });
+});
+</script>
+
+</body>
+</html>

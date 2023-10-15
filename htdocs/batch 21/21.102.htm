@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accordion FAQ</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+  .FAQ {
+    width: 80%;
+    margin: auto;
+    
+  }
+  body{
+    background-color: #343434;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .question {
+    background-color: #342c2c;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 15px;
+  }
+
+  .answer {
+    display: none;
+    padding: 10px;
+    background-color: #fff;
+  }
+</style>
+</head>
+<body>
+
+<div class="FAQ">
+  <div class="question">Which company built the propellor of chandrayaan 3 ?</div>
+  <div class="answer">T C S</div>
+  <div class="question">When was chandrayaan 3 launched ?</div>
+  <div class="answer">14 JULY 2023</div>
+  <div class="question">What is the budget for chandrayaan 3 ?</div>
+  <div class="answer">615 Cr Rupees</div>
+</div>
+
+<script>
+$(document).ready(function() {
+  $(".question").click(function() {
+    var $answer = $(this).next(".answer");
+    
+    if ($answer.is(":visible")) {
+      $answer.slideUp();
+    } else {
+      $(".answer").slideUp();
+      $answer.slideDown();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
